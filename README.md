@@ -9,8 +9,8 @@ I used the code sample provided by Microsoft [there](https://code.msdn.microsoft
 
 To make it work correctly on Windows, do not forget to turn on Bluetooth, and I also had to allow Bluetooth devices to detect my PC (in Bluetooth's advanced parameters).
 
-The server expects a specific packet format which corresponds to a string of 22 chars (a header of 10 chars + an 2 integers on 6 chars each). This is just a test...
+The server expects a specific packet format which corresponds to a string of 22 chars (a header of 10 chars + 2 integers on 6 chars each). This is just a test...
 
 # Client
-Extremelly minimalist client, which connects to the first paired bluetooth device found (may not work if you have several paired devices at the sme time I guess...). Once connected it sends few packets to the server (respecting the strict format required by the server) and that's all.
+Extremely minimalist client, which connects to the first paired Bluetooth device found (may not work as expected if you have several paired devices at the same time I guess...). Once connected it sends few packets to the server (respecting the strict format required by the server) and that's all.
 Tested on Android 5.0.2. You must pair to the computer first.
