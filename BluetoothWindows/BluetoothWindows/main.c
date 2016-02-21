@@ -262,6 +262,8 @@ int main(int argc, char **argv)
  
     run_server_mode();
 
+    WSACleanup();
+
     system("pause");
     return EXIT_SUCCESS;
 }
