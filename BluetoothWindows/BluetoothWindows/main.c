@@ -12,9 +12,6 @@
 // {B62C4E8D-62CC-404b-BBBF-BF3E3BBB1374}
 DEFINE_GUID(g_guidServiceClass, 0xb62c4e8d, 0x62cc, 0x404b, 0xbb, 0xbf, 0xbf, 0x3e, 0x3b, 0xbb, 0x13, 0x74);
 
-#define CXN_TEST_DATA_STRING              (L"~!@#$%^&*()-_=+?<>1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-#define CXN_TRANSFER_DATA_LENGTH          (sizeof(CXN_TEST_DATA_STRING))
-
 #define DEFAULT_LISTEN_BACKLOG        4
 #define INSTANCE_STR L"BluetoothWindows"
 
@@ -23,7 +20,7 @@ DEFINE_GUID(g_guidServiceClass, 0xb62c4e8d, 0x62cc, 0x404b, 0xbb, 0xbf, 0xbf, 0x
 /*
 Just an example of data structure.
 */
-#define LEN_HEADER 10 + 6 + 6
+#define LEN_HEADER (10 + 6 + 6)
 typedef struct packet_s
 {
     char header[LEN_HEADER];
@@ -178,7 +175,7 @@ void handle_data_read(ring_buffer_t *rb)
     free(packet);
 }
 
-ULONG run_server_mode()
+BOOL run_server_mode()
 {
     wchar_t *       instance_name = NULL;
     SOCKET          local_socket = INVALID_SOCKET;
@@ -227,6 +224,9 @@ ULONG run_server_mode()
         }
         printf("Client connected !\n");
         rb = create_ring_buffer(LEN_RECV * 3);
+        if (rb == NULL) {
+            break;
+        }
 
         ret = TRUE;
         while (ret == TRUE) {
@@ -246,11 +246,13 @@ ULONG run_server_mode()
     return TRUE;
 }
 
-int main()
+int main(int argc, char **argv)
 {
     WSADATA WSAData = { 0 };
     int ret = 0;
 
+    (void) argc;
+    (void) argv;
     printf("Start the server...\n");
     ret = WSAStartup(MAKEWORD(2, 2), &WSAData);
     if (ret < 0) {
